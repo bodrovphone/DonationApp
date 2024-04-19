@@ -4,6 +4,7 @@ import {SafeAreaView, Text} from 'react-native';
 import Header from '../../components/Header/Header';
 
 import globalStyle from '../../assets/styles/globalStyle';
+import Badge from '../../components/Badge/Badge';
 import Tab from '../../components/Tab/Tab';
 
 const Home = () => {
@@ -11,7 +12,7 @@ const Home = () => {
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
       <Header text="Azzahri A." />
       <Tab text="Hello I am tab" />
-      <Tab text="Hello I am tab" isInactive />
+      <Badge text="badge" />
       <Text
         style={{
           fontSize: 70,
