@@ -24,13 +24,18 @@ import style from './style';
 
 const Home = () => {
   const user = useSelector<StoreData, StoreData['user']>(state => state.user);
+  const donations = useSelector<StoreData, StoreData['donations']>(
+    state => state.donations,
+  );
   const categories = useSelector<StoreData, StoreData['categories']>(
     state => state.categories,
   );
 
+  //   console.log('current donations', donations);
+
   const dispatch = useDispatch();
   //   React.useEffect(() => {
-  //     dispatch(resetToInitialState());
+  //     dispatch(resetDonations());
   //   }, []);
 
   const [categoryPage, setCategoryPage] = React.useState(1);
