@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import globalStyle from '../../assets/styles/globalStyle';
 import Header from '../../components/Header/Header';
 // import {resetToInitialState} from '../../redux/reducers/user';
+import DonationItem from '../../components/DonationItem/DonationItem';
 import Search from '../../components/Search/Search';
 import Tab from '../../components/Tab/Tab';
 import {
@@ -41,6 +42,9 @@ const Home = () => {
   const [categoryPage, setCategoryPage] = React.useState(1);
   const [categoryList, setCategoryList] = React.useState<Category[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [donationItems, setDonationItems] = React.useState<
+    StoreData['donations']['items']
+  >([]);
   const categoryListPerPage = 4;
 
   const paginateCategoryList = (
@@ -70,6 +74,15 @@ const Home = () => {
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    const items = donations.items.filter(item =>
+      item.categoryIds.includes(categories.selectedCategoryId ?? -1),
+    );
+    console.log('donation items', items);
+    setDonationItems(items || []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories.selectedCategoryId]);
 
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
@@ -142,6 +155,27 @@ const Home = () => {
             )}
           />
         </View>
+        {donationItems.length > 0 && (
+          <View style={style.donationItemsContainer}>
+            {donationItems.map(item => (
+              <View key={item.donationItemId} style={style.singleDonationItem}>
+                <DonationItem
+                  uri={item.image}
+                  badgeTitle={
+                    categories.categories.filter(
+                      val => val.id === categories.selectedCategoryId,
+                    )?.[0]?.name
+                  }
+                  price={parseFloat(item.price)}
+                  donationTitle={item.name}
+                  onPress={() => {
+                    console.log('pressed', item.donationItemId);
+                  }}
+                />
+              </View>
+            ))}
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
