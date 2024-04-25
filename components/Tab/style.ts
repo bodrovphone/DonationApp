@@ -8,7 +8,7 @@ import {
 const style = StyleSheet.create({
   tab: {
     backgroundColor: '#2979F2',
-    height: verticalScale(50),
+    height: verticalScale(55),
     justifyContent: 'center',
     borderRadius: horizontalScale(50),
   },

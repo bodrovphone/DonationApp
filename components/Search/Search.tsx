@@ -7,9 +7,10 @@ import style from './style';
 
 type Props = {
   query?: string;
+  placeholder?: string;
 };
 
-const Search = ({query = ''}: Props) => {
+const Search = ({query = '', placeholder}: Props) => {
   const [queryString, setQueryString] = React.useState(query);
   const inputRef = React.useRef<TextInput>(null);
 
@@ -21,7 +22,7 @@ const Search = ({query = ''}: Props) => {
     <Pressable style={style.container} onPress={handleFocus}>
       <FontAwesomeIcon icon={faSearch} color="#25C0FF" size={22} />
       <TextInput
-        placeholder="Search"
+        placeholder={placeholder || 'Search'}
         value={queryString}
         onChange={e => setQueryString(e.nativeEvent.text)}
         style={style.input}

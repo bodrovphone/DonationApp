@@ -1,16 +1,17 @@
 import React from 'react';
 
-import {GestureResponderEvent, Pressable, Text} from 'react-native';
+import {Pressable, Text} from 'react-native';
 import {horizontalScale} from '../../assets/styles/scaling';
 import style from './style';
 
 type Props = {
   text: string;
   isInactive?: boolean;
-  onPress?: ((e: GestureResponderEvent) => void) | (() => void);
+  id: number;
+  onPress?: (id: number) => void;
 };
 
-const Tab = ({text = '', isInactive = false, onPress}: Props) => {
+const Tab = ({text = '', isInactive = false, onPress, id}: Props) => {
   const [width, setWidth] = React.useState(0);
   const textRef = React.useRef<Text>(null);
   const paddingHorizontal = 33;
@@ -21,9 +22,8 @@ const Tab = ({text = '', isInactive = false, onPress}: Props) => {
 
   return (
     <Pressable
-      disabled={isInactive}
       style={[style.tab, isInactive && style.inactiveTab, tabWidth]}
-      onPress={onPress}>
+      onPress={() => onPress?.(id)}>
       <Text
         style={[style.text, isInactive && style.inactiveText]}
         ref={textRef}
