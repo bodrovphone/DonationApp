@@ -13,17 +13,20 @@ import {useDispatch, useSelector} from 'react-redux';
 import globalStyle from '../../assets/styles/globalStyle';
 import Header from '../../components/Header/Header';
 // import {resetToInitialState} from '../../redux/reducers/user';
+import {NavigationProp} from '@react-navigation/native';
 import DonationItem from '../../components/DonationItem/DonationItem';
 import Search from '../../components/Search/Search';
 import Tab from '../../components/Tab/Tab';
+import {Routes} from '../../navigation/Routes';
 import {
   resetCategories,
   updateSelectedCategoryId,
 } from '../../redux/reducers/categories';
+import {updateSelectedDonationId} from '../../redux/reducers/donations';
 import {Category, StoreData} from '../../redux/types';
 import style from './style';
 
-const Home = () => {
+const Home = ({navigation}: {navigation: NavigationProp<any>}) => {
   const user = useSelector<StoreData, StoreData['user']>(state => state.user);
   const donations = useSelector<StoreData, StoreData['donations']>(
     state => state.donations,
@@ -169,7 +172,8 @@ const Home = () => {
                   price={parseFloat(item.price)}
                   donationTitle={item.name}
                   onPress={() => {
-                    console.log('pressed', item.donationItemId);
+                    dispatch(updateSelectedDonationId(item.donationItemId));
+                    navigation.navigate(Routes.SingleDonationItem);
                   }}
                 />
               </View>

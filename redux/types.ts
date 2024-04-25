@@ -26,5 +26,6 @@ export type StoreData = {
   donations: {
     items: Donation[];
     selectedDonationId: number | undefined;
+    selectedDonationInfo: Donation;
   };
 };
