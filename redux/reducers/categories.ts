@@ -34,6 +34,22 @@ const initialState = {
       id: 8,
       name: 'Others',
     },
+    {
+      id: 9,
+      name: 'Travel',
+    },
+    {
+      id: 10,
+      name: 'Home',
+    },
+    {
+      id: 11,
+      name: 'Personal Care',
+    },
+    {
+      id: 12,
+      name: 'Gifts & Donations',
+    },
   ],
   selectedCategoryId: undefined,
 };
@@ -47,10 +63,11 @@ const CategoriesSlice = createSlice({
       return state;
     },
     resetCategories: () => initialState,
+    resetToInitialState: () => initialState,
   },
 });
 
-export const {updateSelectedCategoryId, resetCategories} =
+export const {updateSelectedCategoryId, resetCategories, resetToInitialState} =
   CategoriesSlice.actions;
 
 export default CategoriesSlice.reducer;

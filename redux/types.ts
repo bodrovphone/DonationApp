@@ -1,3 +1,8 @@
+export type Category = {
+  id: number;
+  name: string;
+};
+
 export type StoreData = {
   user: {
     firstName: string;
@@ -6,10 +11,7 @@ export type StoreData = {
     profilePictureUri: string;
   };
   categories: {
-    categories: {
-      id: number;
-      name: string;
-    }[];
+    categories: Category[];
     selectedCategoryId: number | undefined;
   };
 };

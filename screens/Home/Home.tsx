@@ -15,8 +15,11 @@ import Header from '../../components/Header/Header';
 // import {resetToInitialState} from '../../redux/reducers/user';
 import Search from '../../components/Search/Search';
 import Tab from '../../components/Tab/Tab';
-import {updateSelectedCategoryId} from '../../redux/reducers/categories';
-import {StoreData} from '../../redux/types';
+import {
+  resetCategories,
+  updateSelectedCategoryId,
+} from '../../redux/reducers/categories';
+import {Category, StoreData} from '../../redux/types';
 import style from './style';
 
 const Home = () => {
@@ -26,7 +29,42 @@ const Home = () => {
   );
 
   const dispatch = useDispatch();
-  //   dispatch(resetToInitialState());
+  //   React.useEffect(() => {
+  //     dispatch(resetToInitialState());
+  //   }, []);
+
+  const [categoryPage, setCategoryPage] = React.useState(1);
+  const [categoryList, setCategoryList] = React.useState<Category[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const categoryListPerPage = 4;
+
+  const paginateCategoryList = (
+    items: Category[],
+    pageNumber: number,
+    pageSize: number,
+  ) => {
+    const startIndex = (pageNumber - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    if (startIndex < 0 || endIndex > items.length) {
+      return [];
+    }
+    return items.slice(startIndex, endIndex);
+  };
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    setCategoryList(
+      paginateCategoryList(
+        categories.categories,
+        categoryPage,
+        categoryListPerPage,
+      ),
+    );
+    setCategoryPage(p => p + 1);
+    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
@@ -62,12 +100,34 @@ const Home = () => {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={categories.categories}
+            data={categoryList}
+            onEndReachedThreshold={0.5}
+            onEndReached={() => {
+              if (isLoading) {
+                return;
+              }
+              setIsLoading(true);
+              let newData = paginateCategoryList(
+                categories.categories,
+                categoryPage,
+                categoryListPerPage,
+              );
+
+              if (newData.length > 0) {
+                setCategoryList([...categoryList, ...newData]);
+                setCategoryPage(p => p + 1);
+              }
+              setIsLoading(false);
+            }}
             renderItem={({item}) => (
               <View style={style.categoryItem} key={item.id}>
                 <Tab
                   onPress={() => {
-                    dispatch(updateSelectedCategoryId(item.id));
+                    if (categories.selectedCategoryId !== item.id) {
+                      dispatch(updateSelectedCategoryId(item.id));
+                    } else {
+                      dispatch(resetCategories());
+                    }
                   }}
                   id={item.id}
                   text={item.name}
