@@ -160,24 +160,29 @@ const Home = ({navigation}: {navigation: NavigationProp<any>}) => {
         </View>
         {donationItems.length > 0 && (
           <View style={style.donationItemsContainer}>
-            {donationItems.map(item => (
-              <View key={item.donationItemId} style={style.singleDonationItem}>
-                <DonationItem
-                  uri={item.image}
-                  badgeTitle={
-                    categories.categories.filter(
-                      val => val.id === categories.selectedCategoryId,
-                    )?.[0]?.name
-                  }
-                  price={parseFloat(item.price)}
-                  donationTitle={item.name}
-                  onPress={() => {
-                    dispatch(updateSelectedDonationId(item.donationItemId));
-                    navigation.navigate(Routes.SingleDonationItem);
-                  }}
-                />
-              </View>
-            ))}
+            {donationItems.map(item => {
+              const categoryInformation = categories.categories.filter(
+                val => val.id === categories.selectedCategoryId,
+              )?.[0];
+              return (
+                <View
+                  key={item.donationItemId}
+                  style={style.singleDonationItem}>
+                  <DonationItem
+                    uri={item.image}
+                    badgeTitle={categoryInformation.name}
+                    price={parseFloat(item.price)}
+                    donationTitle={item.name}
+                    onPress={() => {
+                      dispatch(updateSelectedDonationId(item.donationItemId));
+                      navigation.navigate(Routes.SingleDonationItem, {
+                        categoryInformation,
+                      });
+                    }}
+                  />
+                </View>
+              );
+            })}
           </View>
         )}
       </ScrollView>
