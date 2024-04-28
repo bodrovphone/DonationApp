@@ -1,14 +1,15 @@
 import {NavigationProp} from '@react-navigation/native';
 import React from 'react';
-import {Pressable, SafeAreaView, ScrollView, View} from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
 
 import globalStyle from '../../assets/styles/globalStyle';
+import BackButton from '../../components/BackButton/BackButton';
 import Button from '../../components/Button/Button';
 import Header from '../../components/Header/Header';
 import Input from '../../components/Input/Input';
 import style from './style';
 
-const Login = ({
+const Registration = ({
   navigation,
   route,
 }: {
@@ -17,13 +18,24 @@ const Login = ({
 }) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [fullName, setFullName] = React.useState('');
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
+      <View style={style.backButton}>
+        <BackButton onPress={() => navigation.goBack()} />
+      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={style.container}>
         <View style={globalStyle.marginBottom}>
-          <Header text="Welcome Back" />
+          <Header text="Hello and Welcome!" />
+        </View>
+        <View style={globalStyle.marginBottom}>
+          <Input
+            label="First & Last Name"
+            placeholder="Enter your full name..."
+            onChangeText={setFullName}
+          />
         </View>
         <View style={globalStyle.marginBottom}>
           <Input
@@ -42,18 +54,11 @@ const Login = ({
           />
         </View>
         <View style={globalStyle.marginBottom}>
-          <Button text="Login" />
+          <Button text="Registration" />
         </View>
-        <Pressable
-          style={style.registrationButton}
-          onPress={() => {
-            navigation.navigate('Registration');
-          }}>
-          <Header text="Don't have an account" type={3} color="#2979F2" />
-        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default Login;
+export default Registration;
