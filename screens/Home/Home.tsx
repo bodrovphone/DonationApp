@@ -161,9 +161,10 @@ const Home = ({navigation}: {navigation: NavigationProp<any>}) => {
         {donationItems.length > 0 && (
           <View style={style.donationItemsContainer}>
             {donationItems.map(item => {
-              const categoryInformation = categories.categories.filter(
-                val => val.id === categories.selectedCategoryId,
-              )?.[0];
+              const categoryInformation =
+                categories.categories.filter(
+                  val => val.id === categories.selectedCategoryId,
+                )?.[0] ?? {};
               return (
                 <View
                   key={item.donationItemId}
