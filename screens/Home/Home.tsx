@@ -82,7 +82,6 @@ const Home = ({navigation}: {navigation: NavigationProp<any>}) => {
     const items = donations.items.filter(item =>
       item.categoryIds.includes(categories.selectedCategoryId ?? -1),
     );
-    console.log('donation items', items);
     setDonationItems(items || []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories.selectedCategoryId]);
@@ -94,7 +93,7 @@ const Home = ({navigation}: {navigation: NavigationProp<any>}) => {
           <View>
             <Text style={style.headerIntroText}>Hello, </Text>
             <View style={style.userName}>
-              <Header text={`${user.firstName} ${user.lastName}.👋`} />
+              <Header text={`${user.displayName}👋`} />
             </View>
           </View>
           <Image

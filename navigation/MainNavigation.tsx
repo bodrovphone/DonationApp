@@ -8,7 +8,7 @@ import {Routes} from './Routes';
 
 const Stack = createStackNavigator();
 
-const MainNavigation = () => {
+const NonAuthenticatedNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -27,4 +27,21 @@ const MainNavigation = () => {
   );
 };
 
-export default MainNavigation;
+const AuthenticatedNavigation = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        header: () => null,
+      }}
+      initialRouteName={Routes.Home}>
+      <Stack.Screen name={Routes.Home} component={Home} />
+      <Stack.Screen
+        name={Routes.SingleDonationItem}
+        component={SingleDonationItem}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export {AuthenticatedNavigation, NonAuthenticatedNavigation};

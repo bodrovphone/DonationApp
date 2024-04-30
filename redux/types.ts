@@ -14,10 +14,11 @@ export type Donation = {
 
 export type StoreData = {
   user: {
-    firstName: string;
-    lastName: string;
+    displayName: string;
+    email: string;
     userId: number;
     profilePictureUri: string;
+    isLoggedIn: boolean;
   };
   categories: {
     categories: Category[];
