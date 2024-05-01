@@ -30,3 +30,11 @@ export type StoreData = {
     selectedDonationInfo: Donation;
   };
 };
+
+export type User = {
+  displayName?: string;
+  email?: string;
+  profilePictureUri?: string;
+  isLoggedIn?: boolean;
+  token?: string;
+};

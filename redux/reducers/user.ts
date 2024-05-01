@@ -1,11 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {User} from '../types';
 
-const initialState = {
+const initialState: User = {
   isLoggedIn: false,
   profilePictureUri: 'https://avatars.githubusercontent.com/u/18177886?v=4',
 };
 
-const User = createSlice({
+const UserSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
@@ -17,8 +18,14 @@ const User = createSlice({
       };
     },
     resetToInitialState: () => initialState,
+    updateToken: (state, action) => {
+      return {
+        ...state,
+        token: action.payload,
+      };
+    },
   },
 });
 
-export const {logIn, resetToInitialState} = User.actions;
-export default User.reducer;
+export const {logIn, resetToInitialState, updateToken} = UserSlice.actions;
+export default UserSlice.reducer;

@@ -14,6 +14,7 @@ import globalStyle from '../../assets/styles/globalStyle';
 import Header from '../../components/Header/Header';
 // import {resetToInitialState} from '../../redux/reducers/user';
 import {NavigationProp} from '@react-navigation/native';
+import {logOut} from '../../api/user';
 import DonationItem from '../../components/DonationItem/DonationItem';
 import Search from '../../components/Search/Search';
 import Tab from '../../components/Tab/Tab';
@@ -23,6 +24,7 @@ import {
   updateSelectedCategoryId,
 } from '../../redux/reducers/categories';
 import {updateSelectedDonationId} from '../../redux/reducers/donations';
+import {resetToInitialState} from '../../redux/reducers/user';
 import {Category, StoreData} from '../../redux/types';
 import style from './style';
 
@@ -96,11 +98,21 @@ const Home = ({navigation}: {navigation: NavigationProp<any>}) => {
               <Header text={`${user.displayName}👋`} />
             </View>
           </View>
-          <Image
-            source={{uri: user.profilePictureUri}}
-            style={style.profilePicture}
-            resizeMode="contain"
-          />
+
+          <View>
+            <Image
+              source={{uri: user.profilePictureUri}}
+              style={style.profilePicture}
+              resizeMode="contain"
+            />
+            <Pressable
+              onPress={async () => {
+                dispatch(resetToInitialState());
+                await logOut();
+              }}>
+              <Header text="Logout" type={3} color="#156CF7" />
+            </Pressable>
+          </View>
         </View>
         <View style={style.searchBox}>
           <Search />
